@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="da" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kontakt - Sofie Hermind</title>
+    <meta name="description" content="Kontakt mig for booking af koncerter, workshops eller firmaevents.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <link rel="stylesheet" href="/assets/style.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        cream: '#fffefb',
+                        warm: {
+                            50: '#fff9f0',
+                            100: '#ffefd8',
+                            200: '#ffe4c0',
+                        },
+                        burgundy: {
+                            DEFAULT: '#8b1e3f',
+                            dark: '#6b1530',
+                        },
+                        gold: {
+                            DEFAULT: '#e6b655',
+                            light: '#f5d180',
+                        },
+                        bronze: '#c4904f',
+                        charcoal: '#2d2926',
+                        slate: {
+                            DEFAULT: '#4a4542',
+                            light: '#6b6662',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="/assets/sun-3d.js"></script>
+
+</head>
+<body class="bg-cream text-charcoal">
+<nav class="border-b border-gold/20 bg-white/90 backdrop-blur-md fixed top-0 left-0 right-0 z-50 shadow-sm">
+    <div class="max-w-7xl mx-auto px-6 sm:px-8">
+        <div class="flex justify-between items-center h-20">
+            <a href="/" class="flex items-center gap-3 font-serif text-2xl font-semibold text-burgundy">
+                <div id="sun-3d-container" class="h-10 w-10"></div>
+                Sofie Hermind
+            </a>
+
+            <div class="hidden md:flex space-x-10 items-center">
+                <a href="/" class="elegant-underline text-slate hover:text-burgundy transition-colors">
+                    Hjem
+                </a>
+                <a href="/about.html" class="elegant-underline text-slate hover:text-burgundy transition-colors">
+                    Om Sofie
+                </a>
+                <a href="/choirs.html" class="elegant-underline text-slate hover:text-burgundy transition-colors">
+                    Kor
+                </a>
+                <a href="/services.html" class="elegant-underline text-slate hover:text-burgundy transition-colors">
+                    Services
+                </a>
+                <a href="/contact.html" class="px-6 py-2 bg-burgundy text-white rounded-full hover:bg-burgundy-dark transition-all hover:shadow-lg">
+                    Kontakt
+                </a>
+                <div class="flex items-center gap-1.5 text-sm border-l border-gold/20 pl-6 ml-2">
+                    <a data-lang="da" class="px-1 text-slate-light hover:text-burgundy transition-colors cursor-pointer">DA</a>
+                    <span class="text-gold/30">&middot;</span>
+                    <a data-lang="en" class="px-1 text-slate-light hover:text-burgundy transition-colors cursor-pointer">EN</a>
+                    <span class="text-gold/30">&middot;</span>
+                    <a data-lang="de" class="px-1 text-slate-light hover:text-burgundy transition-colors cursor-pointer">DE</a>
+                </div>
+            </div>
+
+            <button id="mobile-menu-button" class="md:hidden text-burgundy">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden pb-6">
+            <div class="flex gap-4 pb-4 mb-4 border-b border-gold/20">
+                <a data-lang="da" class="text-sm text-slate-light hover:text-burgundy transition-colors cursor-pointer">DA</a>
+                <a data-lang="en" class="text-sm text-slate-light hover:text-burgundy transition-colors cursor-pointer">EN</a>
+                <a data-lang="de" class="text-sm text-slate-light hover:text-burgundy transition-colors cursor-pointer">DE</a>
+            </div>
+            <div class="flex flex-col space-y-4">
+                <a href="/" class="text-slate hover:text-burgundy transition-colors">Hjem</a>
+                <a href="/about.html" class="text-slate hover:text-burgundy transition-colors">Om Sofie</a>
+                <a href="/choirs.html" class="text-slate hover:text-burgundy transition-colors">Kor</a>
+                <a href="/services.html" class="text-slate hover:text-burgundy transition-colors">Services</a>
+                <a href="/contact.html" class="text-slate hover:text-burgundy transition-colors">Kontakt</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<script>
+document.getElementById('mobile-menu-button').addEventListener('click', function() {
+    document.getElementById('mobile-menu').classList.toggle('hidden');
+});
+(function() {
+    var p = window.location.pathname;
+    if (p.endsWith('/')) p += 'index.html';
+    var m = p.match(/^\/(en|de)\/(.*)/);
+    var lang = m ? m[1] : 'da';
+    var page = m ? m[2] : p.substring(1);
+    if (!page) page = 'index.html';
+    document.querySelectorAll('[data-lang]').forEach(function(a) {
+        var l = a.dataset.lang;
+        a.href = l === 'da' ? '/' + page : '/' + l + '/' + page;
+        if (l === lang) { a.classList.add('font-bold', 'text-burgundy'); a.classList.remove('text-slate-light'); }
+    });
+})();
+(function() {
+    var p = window.location.pathname;
+    if (p.endsWith('/')) p = p + 'index.html';
+    if (p === '/index.html') p = '/';
+    document.querySelectorAll('nav a[href]').forEach(function(a) {
+        var h = a.getAttribute('href');
+        if (!h || h.startsWith('#') || h.startsWith('http') || h.startsWith('mailto') || a.hasAttribute('data-lang')) return;
+        var hp = h;
+        if (hp.endsWith('/index.html')) hp = hp.slice(0, -10);
+        if (hp === p || (hp.endsWith('/') && hp + 'index.html' === p + '/index.html')) {
+            if (!a.classList.contains('bg-burgundy')) {
+                a.classList.remove('text-slate');
+                a.classList.add('text-burgundy', 'font-semibold');
+            }
+        }
+    });
+})();
+</script>
+
+<div class="h-20"></div>
+
+
+
+<!-- Hero -->
+<section class="relative pt-16 pb-12 bg-warm-50">
+    <div class="max-w-7xl mx-auto px-6 sm:px-8">
+        <div class="max-w-3xl">
+            <div class="accent-line mb-6"></div>
+            <h1 class="font-serif text-4xl md:text-5xl font-bold text-burgundy mb-4">
+                Lad os tale sammen
+            </h1>
+            <p class="text-lg text-slate leading-relaxed">
+                20+ års erfaring med at forene mennesker gennem musik
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Info -->
+<section class="py-12 bg-white">
+    <div class="max-w-6xl mx-auto px-6 sm:px-8">
+        <div class="text-center mb-12">
+            <p class="text-xl text-slate leading-relaxed">
+                Jeg ser frem til at høre om dit projekt - kontakt mig for en uforpligtende snak.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+            <!-- Left Column: Når du kontakter mig -->
+            <div>
+                <h3 class="font-serif text-3xl font-bold text-burgundy mb-6">Når du kontakter mig</h3>
+                <p class="text-slate text-lg mb-6">Det hjælper mig, hvis du fortæller:</p>
+                <ul class="space-y-4">
+                    <li class="flex items-start gap-4">
+                        <div class="w-2 h-2 bg-gold rounded-full mt-2 flex-shrink-0"></div>
+                        <span class="text-slate">Hvilken type event/arrangement du planlægger</span>
+                    </li>
+                    <li class="flex items-start gap-4">
+                        <div class="w-2 h-2 bg-gold rounded-full mt-2 flex-shrink-0"></div>
+                        <span class="text-slate">Dato og sted for eventet</span>
+                    </li>
+                    <li class="flex items-start gap-4">
+                        <div class="w-2 h-2 bg-gold rounded-full mt-2 flex-shrink-0"></div>
+                        <span class="text-slate">Antal deltagere/publikum</span>
+                    </li>
+                    <li class="flex items-start gap-4">
+                        <div class="w-2 h-2 bg-gold rounded-full mt-2 flex-shrink-0"></div>
+                        <span class="text-slate">Budget-ramme hvis muligt</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Right Column: Praktisk info -->
+            <div>
+                <h3 class="font-serif text-3xl font-bold text-burgundy mb-6">Praktisk info</h3>
+
+                <div class="mb-8">
+                    <h4 class="text-lg font-semibold text-slate mb-3">📍 Lokation</h4>
+                    <p class="text-slate leading-relaxed">
+                        Baseret i <strong>Dragør</strong> ved København. Arbejder i hele Danmark og internationalt.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-semibold text-slate mb-3">⏰ Svartid</h4>
+                    <p class="text-slate leading-relaxed">
+                        Jeg svarer inden for 1-3 hverdage
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Email CTA -->
+<section class="py-16 bg-warm-50">
+    <div class="max-w-4xl mx-auto px-6 sm:px-8 text-center">
+        <div class="w-20 h-20 bg-burgundy/10 rounded-full flex items-center justify-center mx-auto mb-8">
+            <svg class="w-10 h-10 text-burgundy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+            </svg>
+        </div>
+
+        <a href="mailto:hermindgospel@gmail.com" class="inline-block text-4xl md:text-5xl font-serif font-bold text-burgundy hover:text-burgundy-dark transition-colors mb-6">
+            hermindgospel@gmail.com
+        </a>
+
+        <p class="text-xl text-slate mt-6">
+            Send mig en email, så tager vi en snak om dine ønsker
+        </p>
+    </div>
+</section>
+
+<footer class="mt-32 bg-charcoal text-warm-100">
+    <div class="max-w-7xl mx-auto px-6 sm:px-8 py-20">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-16 mb-16">
+            <div>
+                <h3 class="font-serif text-3xl font-bold text-gold mb-4">Sofie Hermind</h3>
+                <p class="text-warm-200 leading-relaxed">
+                    Dirigent<br>
+                    Producer<br>
+                    Workshop Leder<br>
+                    Solist
+                </p>
+            </div>
+
+            <div>
+                <h4 class="text-sm font-semibold text-gold mb-6 uppercase tracking-widest">Navigation</h4>
+                <ul class="space-y-4">
+                    <li><a href="/" class="elegant-underline text-warm-200 hover:text-white transition-colors">Hjem</a></li>
+                    <li><a href="/about.html" class="elegant-underline text-warm-200 hover:text-white transition-colors">Om Sofie</a></li>
+                    <li><a href="/choirs.html" class="elegant-underline text-warm-200 hover:text-white transition-colors">Kor</a></li>
+                    <li><a href="/services.html" class="elegant-underline text-warm-200 hover:text-white transition-colors">Services</a></li>
+                    <li><a href="/contact.html" class="elegant-underline text-warm-200 hover:text-white transition-colors">Kontakt</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-sm font-semibold text-gold mb-6 uppercase tracking-widest">Kontakt</h4>
+                <p class="text-warm-200 mb-4">
+                    <a href="mailto:hermindgospel@gmail.com" class="elegant-underline hover:text-white transition-colors">
+                        hermindgospel@gmail.com
+                    </a>
+                </p>
+            </div>
+        </div>
+
+        <div class="border-t border-slate pt-8 text-center text-sm text-slate-light">
+            <p>&copy; 2026 Sofie Hermind. Alle rettigheder forbeholdes.</p>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>
+

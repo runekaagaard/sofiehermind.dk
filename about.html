@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="da" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Om Sofie - Sofie Hermind</title>
+    <meta name="description" content="Lær Sofie Hermind at kende - professionel dirigent, producer og workshop-leder med 20+ års erfaring.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <link rel="stylesheet" href="/assets/style.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        cream: '#fffefb',
+                        warm: {
+                            50: '#fff9f0',
+                            100: '#ffefd8',
+                            200: '#ffe4c0',
+                        },
+                        burgundy: {
+                            DEFAULT: '#8b1e3f',
+                            dark: '#6b1530',
+                        },
+                        gold: {
+                            DEFAULT: '#e6b655',
+                            light: '#f5d180',
+                        },
+                        bronze: '#c4904f',
+                        charcoal: '#2d2926',
+                        slate: {
+                            DEFAULT: '#4a4542',
+                            light: '#6b6662',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="/assets/sun-3d.js"></script>
+
+</head>
+<body class="bg-cream text-charcoal">
+<nav class="border-b border-gold/20 bg-white/90 backdrop-blur-md fixed top-0 left-0 right-0 z-50 shadow-sm">
+    <div class="max-w-7xl mx-auto px-6 sm:px-8">
+        <div class="flex justify-between items-center h-20">
+            <a href="/" class="flex items-center gap-3 font-serif text-2xl font-semibold text-burgundy">
+                <div id="sun-3d-container" class="h-10 w-10"></div>
+                Sofie Hermind
+            </a>
+
+            <div class="hidden md:flex space-x-10 items-center">
+                <a href="/" class="elegant-underline text-slate hover:text-burgundy transition-colors">
+                    Hjem
+                </a>
+                <a href="/about.html" class="elegant-underline text-slate hover:text-burgundy transition-colors">
+                    Om Sofie
+                </a>
+                <a href="/choirs.html" class="elegant-underline text-slate hover:text-burgundy transition-colors">
+                    Kor
+                </a>
+                <a href="/services.html" class="elegant-underline text-slate hover:text-burgundy transition-colors">
+                    Services
+                </a>
+                <a href="/contact.html" class="px-6 py-2 bg-burgundy text-white rounded-full hover:bg-burgundy-dark transition-all hover:shadow-lg">
+                    Kontakt
+                </a>
+                <div class="flex items-center gap-1.5 text-sm border-l border-gold/20 pl-6 ml-2">
+                    <a data-lang="da" class="px-1 text-slate-light hover:text-burgundy transition-colors cursor-pointer">DA</a>
+                    <span class="text-gold/30">&middot;</span>
+                    <a data-lang="en" class="px-1 text-slate-light hover:text-burgundy transition-colors cursor-pointer">EN</a>
+                    <span class="text-gold/30">&middot;</span>
+                    <a data-lang="de" class="px-1 text-slate-light hover:text-burgundy transition-colors cursor-pointer">DE</a>
+                </div>
+            </div>
+
+            <button id="mobile-menu-button" class="md:hidden text-burgundy">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden pb-6">
+            <div class="flex gap-4 pb-4 mb-4 border-b border-gold/20">
+                <a data-lang="da" class="text-sm text-slate-light hover:text-burgundy transition-colors cursor-pointer">DA</a>
+                <a data-lang="en" class="text-sm text-slate-light hover:text-burgundy transition-colors cursor-pointer">EN</a>
+                <a data-lang="de" class="text-sm text-slate-light hover:text-burgundy transition-colors cursor-pointer">DE</a>
+            </div>
+            <div class="flex flex-col space-y-4">
+                <a href="/" class="text-slate hover:text-burgundy transition-colors">Hjem</a>
+                <a href="/about.html" class="text-slate hover:text-burgundy transition-colors">Om Sofie</a>
+                <a href="/choirs.html" class="text-slate hover:text-burgundy transition-colors">Kor</a>
+                <a href="/services.html" class="text-slate hover:text-burgundy transition-colors">Services</a>
+                <a href="/contact.html" class="text-slate hover:text-burgundy transition-colors">Kontakt</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<script>
+document.getElementById('mobile-menu-button').addEventListener('click', function() {
+    document.getElementById('mobile-menu').classList.toggle('hidden');
+});
+(function() {
+    var p = window.location.pathname;
+    if (p.endsWith('/')) p += 'index.html';
+    var m = p.match(/^\/(en|de)\/(.*)/);
+    var lang = m ? m[1] : 'da';
+    var page = m ? m[2] : p.substring(1);
+    if (!page) page = 'index.html';
+    document.querySelectorAll('[data-lang]').forEach(function(a) {
+        var l = a.dataset.lang;
+        a.href = l === 'da' ? '/' + page : '/' + l + '/' + page;
+        if (l === lang) { a.classList.add('font-bold', 'text-burgundy'); a.classList.remove('text-slate-light'); }
+    });
+})();
+(function() {
+    var p = window.location.pathname;
+    if (p.endsWith('/')) p = p + 'index.html';
+    if (p === '/index.html') p = '/';
+    document.querySelectorAll('nav a[href]').forEach(function(a) {
+        var h = a.getAttribute('href');
+        if (!h || h.startsWith('#') || h.startsWith('http') || h.startsWith('mailto') || a.hasAttribute('data-lang')) return;
+        var hp = h;
+        if (hp.endsWith('/index.html')) hp = hp.slice(0, -10);
+        if (hp === p || (hp.endsWith('/') && hp + 'index.html' === p + '/index.html')) {
+            if (!a.classList.contains('bg-burgundy')) {
+                a.classList.remove('text-slate');
+                a.classList.add('text-burgundy', 'font-semibold');
+            }
+        }
+    });
+})();
+</script>
+
+<div class="h-20"></div>
+
+
+
+<!-- Hero -->
+<section class="relative pt-16 pb-12 bg-warm-50">
+    <div class="max-w-7xl mx-auto px-6 sm:px-8">
+        <div class="max-w-3xl">
+            <div class="accent-line mb-6"></div>
+            <h1 class="font-serif text-4xl md:text-5xl font-bold text-burgundy mb-4">
+                Om Sofie
+            </h1>
+            <p class="text-lg text-slate leading-relaxed">
+                20+ års erfaring med at forene mennesker gennem musik
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Main Content with Image -->
+<section class="py-12">
+    <div class="max-w-7xl mx-auto px-6 sm:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-5 gap-10">
+            <div class="lg:col-span-3">
+                <div class="prose prose-lg max-w-none">
+                    <p class="text-xl text-slate leading-relaxed mb-8">
+                        Musik har en unik kraft til at forene mennesker – at skabe energi, glæde og fællesskab på tværs af baggrunde. Mit speciale er gospel, en tradition der i sin kerne handler om netop det: at løfte hinanden gennem sang. Jeg brænder for at skabe de øjeblikke hvor publikum rejser sig, sangerne føler sig levende, og musikken skaber ægte forbindelse.
+                    </p>
+
+                    <h2 class="font-serif text-3xl font-bold text-burgundy mb-6 mt-12">
+                        Min tilgang
+                    </h2>
+                    <p class="text-slate leading-relaxed mb-6">
+                        Som dirigent og producer bygger jeg oplevelser fra bunden. Mit arbejde spænder fra at udvikle konceptet, samle kor og band, koordinere dansere og håndtere den praktiske afvikling til selv at stå og lede det hele fra scenen. Store produktioner med professionelle musikere. Workshops hvor medarbejdere finder fællesskab gennem sang. Uanset skalaen håndterer jeg både det kunstneriske og det praktiske.
+                    </p>
+                    <p class="text-slate leading-relaxed mb-6">
+                        Derudover underviser jeg dirigenter og kor i både Danmark og internationalt. Fra masterclasses på Rytmisk Musikkonservatorium til workshops ved internationale korstævner - jeg deler ud af tekniker, erfaring og passion for korledelse.
+                    </p>
+                    <p class="text-slate leading-relaxed mb-6">
+                        Jeg tror på, at alle kan synge – det handler om at finde glæden ved musikken og lade sig rive med af energien.
+                    </p>
+
+                    <h2 class="font-serif text-3xl font-bold text-burgundy mb-6 mt-12">
+                        Erfaring der tæller
+                    </h2>
+                    <p class="text-slate leading-relaxed mb-6">
+                        Gennem årene har jeg ledet 14 forskellige kor fra børn til voksne, og stået på scener fra Det Kongelige Teaters Gamle Scene til Roskilde Festival, fra sorte kirker i Londons East End til koncertsale i Wien. Jeg har været support for Kirk Franklin i Forum, sunget med millionsælgende Donald Lawrence, og dirigeret 1000 sangere ved Gospel Aid Festival.
+                    </p>
+                    <p class="text-slate leading-relaxed mb-6">
+                        Som producer har jeg koordineret Danmarks største flashmob med 500 sangere i CPH Airport – fra at samle 8 kor til at håndtere kamerahold og lydteknikere. Til DI Dansk Industris Topmøde var jeg både idéudvikler, produktionsleder og solist – jeg byggede showet fra konceptet til den sidste tone. Jeg har holdt workshops for nogle af Danmarks største virksomheder og organisationer - fra Anklagemyndigheden med 1200 deltagere til CPH Airport, DI Dansk Industri, Novo, Nordea, DSB og IBM.
+                    </p>
+                    <p class="text-slate leading-relaxed mb-6">
+                        Men det jeg er mest stolt af er de tusindvis af sangere jeg har haft fornøjelsen af at arbejde med, og de utallige øjeblikke hvor musikken har skabt ægte forbindelse mellem mennesker.
+                    </p>
+                </div>
+            </div>
+
+            <div class="lg:col-span-2">
+                <div class="sticky top-32">
+                    <div class="beautiful-card rounded-2xl overflow-hidden mb-8">
+                        <div class="image-overlay">
+                            <img src="/assets/images/sofie/sofie-hermind-glostrup-scaled.jpg" alt="Sofie Hermind" class="w-full h-auto">
+                        </div>
+                    </div>
+
+                    <div class="beautiful-card rounded-2xl p-8">
+                        <h3 class="font-serif text-2xl font-bold text-burgundy mb-6">Kernekompetencer</h3>
+                        <ul class="space-y-4 text-slate">
+                            <li class="flex items-start">
+                                <span class="text-gold mr-3 text-xl">•</span>
+                                <span>Korledelse (alle niveauer - børn til professionelle)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-gold mr-3 text-xl">•</span>
+                                <span>Koncertproduktion (turnkey shows med band, sangere, dansere)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-gold mr-3 text-xl">•</span>
+                                <span>Corporate workshops & teambuilding gennem sang</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-gold mr-3 text-xl">•</span>
+                                <span>Solist & performer</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-gold mr-3 text-xl">•</span>
+                                <span>Event-koordinering (store events, flashmobs, galaer)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-gold mr-3 text-xl">•</span>
+                                <span>Gospel-undervisning og vokal coaching</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-gold mr-3 text-xl">•</span>
+                                <span>Musikarrangement & koropsætning</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-gold mr-3 text-xl">•</span>
+                                <span>International erfaring & authentisk gospeltradition</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-gold mr-3 text-xl">•</span>
+                                <span>Dirigentundervisning & masterclasses</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Timeline -->
+<section class="py-16 bg-warm-50">
+    <div class="max-w-5xl mx-auto px-6 sm:px-8">
+        <div class="text-center mb-12">
+            <div class="accent-line mx-auto mb-4"></div>
+            <h2 class="font-serif text-4xl font-bold text-burgundy mb-4">
+                Min rejse
+            </h2>
+        </div>
+
+        <div class="space-y-8">
+            <div class="flex gap-6 items-start">
+                <div class="font-serif text-xl font-bold text-gold min-w-[80px]">2004</div>
+                <div class="beautiful-card p-6 rounded-2xl flex-1">
+                    <h3 class="font-serif text-xl font-bold text-burgundy mb-2">Stiftede Revelation Gospel Choir</h3>
+                    <p class="text-slate">
+                        Mit hovedensemble der i dag er et af Danmarks stærkeste gospel-kor
+                    </p>
+                </div>
+            </div>
+
+            <div class="flex gap-6 items-start">
+                <div class="font-serif text-xl font-bold text-gold min-w-[80px]">2011-2012</div>
+                <div class="beautiful-card p-6 rounded-2xl flex-1">
+                    <h3 class="font-serif text-xl font-bold text-burgundy mb-2">Projekt Venskabs-kor</h3>
+                    <p class="text-slate">
+                        Initiativtager til kor i Center Sandholm flygtningelejr - kulminerede med koncert sammen med Saybia på Plænen i Tivoli
+                    </p>
+                </div>
+            </div>
+
+            <div class="flex gap-6 items-start">
+                <div class="font-serif text-xl font-bold text-gold min-w-[80px]">2015</div>
+                <div class="beautiful-card p-6 rounded-2xl flex-1">
+                    <h3 class="font-serif text-xl font-bold text-burgundy mb-2">CPH Airport Flashmob & Gospel Aid</h3>
+                    <p class="text-slate">
+                        Koordinerede Danmarks største gospel-flashmob med 500 sangere for CPH Airport. Samme år dirigent for 1000 sangere ved Gospel Aid Festival
+                    </p>
+                </div>
+            </div>
+
+            <div class="flex gap-6 items-start">
+                <div class="font-serif text-xl font-bold text-gold min-w-[80px]">2016</div>
+                <div class="beautiful-card p-6 rounded-2xl flex-1">
+                    <h3 class="font-serif text-xl font-bold text-burgundy mb-2">Det Kongelige Teater, Gamle Scene</h3>
+                    <p class="text-slate">
+                        Solist og dirigent i forestillingen Hübberiet på Danmarks mest prestigefyldte scene
+                    </p>
+                </div>
+            </div>
+
+            <div class="flex gap-6 items-start">
+                <div class="font-serif text-xl font-bold text-gold min-w-[80px]">2017</div>
+                <div class="beautiful-card p-6 rounded-2xl flex-1">
+                    <h3 class="font-serif text-xl font-bold text-burgundy mb-2">Anklagemyndigheden Workshop</h3>
+                    <p class="text-slate">
+                        Workshop for 1200 deltagere i Øksnehallen - skrev deres egen slagsang
+                    </p>
+                </div>
+            </div>
+
+            <div class="flex gap-6 items-start">
+                <div class="font-serif text-xl font-bold text-gold min-w-[80px]">2018</div>
+                <div class="beautiful-card p-6 rounded-2xl flex-1">
+                    <h3 class="font-serif text-xl font-bold text-burgundy mb-2">Support for Kirk Franklin i Forum</h3>
+                    <p class="text-slate">
+                        Revelation Gospel Choir som support-act for gospel-legenden i Forum København
+                    </p>
+                </div>
+            </div>
+
+            <div class="flex gap-6 items-start">
+                <div class="font-serif text-xl font-bold text-gold min-w-[80px]">2019</div>
+                <div class="beautiful-card p-6 rounded-2xl flex-1">
+                    <h3 class="font-serif text-xl font-bold text-burgundy mb-2">DI Topmøde & Donald Lawrence</h3>
+                    <p class="text-slate">
+                        Idéudvikler og solist til DI Dansk Industris Topmøde i DRs Koncertsal, med statsministeren til stede. Korsanger for millionsælgende gospelartist Donald Lawrence
+                    </p>
+                </div>
+            </div>
+
+            <div class="flex gap-6 items-start">
+                <div class="font-serif text-xl font-bold text-gold min-w-[80px]">2020</div>
+                <div class="beautiful-card p-6 rounded-2xl flex-1">
+                    <h3 class="font-serif text-xl font-bold text-burgundy mb-2">Glostrup Gospel</h3>
+                    <p class="text-slate">
+                        Tiltrådte som dirigent for Glostrup Gospel – ca. 50 sangere der bringer gospel til nye publikummer
+                    </p>
+                </div>
+            </div>
+
+            <div class="flex gap-6 items-start">
+                <div class="font-serif text-xl font-bold text-gold min-w-[80px]">2022-2023</div>
+                <div class="beautiful-card p-6 rounded-2xl flex-1">
+                    <h3 class="font-serif text-xl font-bold text-burgundy mb-2">London-turnéer med Revelation</h3>
+                    <p class="text-slate">
+                        To turnéer i sorte kirker i London - tilbage til gospel-musikkens rødder
+                    </p>
+                </div>
+            </div>
+
+            <div class="flex gap-6 items-start">
+                <div class="font-serif text-xl font-bold text-gold min-w-[80px]">2024</div>
+                <div class="beautiful-card p-6 rounded-2xl flex-1">
+                    <h3 class="font-serif text-xl font-bold text-burgundy mb-2">20-års Jubilæum</h3>
+                    <p class="text-slate">
+                        Fejrede 20 år med Revelation Gospel Choir med specielle koncerter
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="py-16 bg-white">
+    <div class="max-w-4xl mx-auto px-6 sm:px-8 text-center">
+        <h2 class="font-serif text-4xl font-bold text-burgundy mb-6">
+            Lad os skabe noget sammen
+        </h2>
+        <p class="text-lg text-slate mb-8 max-w-2xl mx-auto">
+            Uanset om det er et stort show eller en intim workshop – jeg ser frem til at høre om dit projekt
+        </p>
+        <a href="/contact.html" class="inline-block px-10 py-4 bg-burgundy text-white font-semibold text-lg rounded-full hover:bg-burgundy-dark transition-all hover:shadow-2xl">
+            Kontakt mig
+        </a>
+    </div>
+</section>
+
+<footer class="mt-32 bg-charcoal text-warm-100">
+    <div class="max-w-7xl mx-auto px-6 sm:px-8 py-20">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-16 mb-16">
+            <div>
+                <h3 class="font-serif text-3xl font-bold text-gold mb-4">Sofie Hermind</h3>
+                <p class="text-warm-200 leading-relaxed">
+                    Dirigent<br>
+                    Producer<br>
+                    Workshop Leder<br>
+                    Solist
+                </p>
+            </div>
+
+            <div>
+                <h4 class="text-sm font-semibold text-gold mb-6 uppercase tracking-widest">Navigation</h4>
+                <ul class="space-y-4">
+                    <li><a href="/" class="elegant-underline text-warm-200 hover:text-white transition-colors">Hjem</a></li>
+                    <li><a href="/about.html" class="elegant-underline text-warm-200 hover:text-white transition-colors">Om Sofie</a></li>
+                    <li><a href="/choirs.html" class="elegant-underline text-warm-200 hover:text-white transition-colors">Kor</a></li>
+                    <li><a href="/services.html" class="elegant-underline text-warm-200 hover:text-white transition-colors">Services</a></li>
+                    <li><a href="/contact.html" class="elegant-underline text-warm-200 hover:text-white transition-colors">Kontakt</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-sm font-semibold text-gold mb-6 uppercase tracking-widest">Kontakt</h4>
+                <p class="text-warm-200 mb-4">
+                    <a href="mailto:hermindgospel@gmail.com" class="elegant-underline hover:text-white transition-colors">
+                        hermindgospel@gmail.com
+                    </a>
+                </p>
+            </div>
+        </div>
+
+        <div class="border-t border-slate pt-8 text-center text-sm text-slate-light">
+            <p>&copy; 2026 Sofie Hermind. Alle rettigheder forbeholdes.</p>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>
+
