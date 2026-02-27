@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <link rel="stylesheet" href="/assets/style.css">
+    <link rel="stylesheet" href="/sofiehermind.dk/assets/style.css">
     <script>
         tailwind.config = {
             theme: {
@@ -45,32 +45,32 @@
             }
         }
     </script>
-    <script src="/assets/sun-3d.js"></script>
+    <script src="/sofiehermind.dk/assets/sun-3d.js"></script>
 
 </head>
 <body class="bg-cream text-charcoal">
 <nav class="border-b border-gold/20 bg-white/90 backdrop-blur-md fixed top-0 left-0 right-0 z-50 shadow-sm">
     <div class="max-w-7xl mx-auto px-6 sm:px-8">
         <div class="flex justify-between items-center h-20">
-            <a href="/de/" class="flex items-center gap-3 font-serif text-2xl font-semibold text-burgundy">
+            <a href="/sofiehermind.dk/de/" class="flex items-center gap-3 font-serif text-2xl font-semibold text-burgundy">
                 <div id="sun-3d-container" class="h-10 w-10"></div>
                 Sofie Hermind
             </a>
 
             <div class="hidden md:flex space-x-10 items-center">
-                <a href="/de/" class="elegant-underline text-slate hover:text-burgundy transition-colors">
+                <a href="/sofiehermind.dk/de/" class="elegant-underline text-slate hover:text-burgundy transition-colors">
                     Startseite
                 </a>
-                <a href="/de/about.html" class="elegant-underline text-slate hover:text-burgundy transition-colors">
+                <a href="/sofiehermind.dk/de/about.html" class="elegant-underline text-slate hover:text-burgundy transition-colors">
                     &Uuml;ber Sofie
                 </a>
-                <a href="/de/choirs.html" class="elegant-underline text-slate hover:text-burgundy transition-colors">
+                <a href="/sofiehermind.dk/de/choirs.html" class="elegant-underline text-slate hover:text-burgundy transition-colors">
                     Ch&ouml;re
                 </a>
-                <a href="/de/services.html" class="elegant-underline text-slate hover:text-burgundy transition-colors">
+                <a href="/sofiehermind.dk/de/services.html" class="elegant-underline text-slate hover:text-burgundy transition-colors">
                     Leistungen
                 </a>
-                <a href="/de/contact.html" class="px-6 py-2 bg-burgundy text-white rounded-full hover:bg-burgundy-dark transition-all hover:shadow-lg">
+                <a href="/sofiehermind.dk/de/contact.html" class="px-6 py-2 bg-burgundy text-white rounded-full hover:bg-burgundy-dark transition-all hover:shadow-lg">
                     Kontakt
                 </a>
                 <div class="flex items-center gap-1.5 text-sm border-l border-gold/20 pl-6 ml-2">
@@ -96,11 +96,11 @@
                 <a data-lang="de" class="text-sm text-slate-light hover:text-burgundy transition-colors cursor-pointer">DE</a>
             </div>
             <div class="flex flex-col space-y-4">
-                <a href="/de/" class="text-slate hover:text-burgundy transition-colors">Startseite</a>
-                <a href="/de/about.html" class="text-slate hover:text-burgundy transition-colors">&Uuml;ber Sofie</a>
-                <a href="/de/choirs.html" class="text-slate hover:text-burgundy transition-colors">Ch&ouml;re</a>
-                <a href="/de/services.html" class="text-slate hover:text-burgundy transition-colors">Leistungen</a>
-                <a href="/de/contact.html" class="text-slate hover:text-burgundy transition-colors">Kontakt</a>
+                <a href="/sofiehermind.dk/de/" class="text-slate hover:text-burgundy transition-colors">Startseite</a>
+                <a href="/sofiehermind.dk/de/about.html" class="text-slate hover:text-burgundy transition-colors">&Uuml;ber Sofie</a>
+                <a href="/sofiehermind.dk/de/choirs.html" class="text-slate hover:text-burgundy transition-colors">Ch&ouml;re</a>
+                <a href="/sofiehermind.dk/de/services.html" class="text-slate hover:text-burgundy transition-colors">Leistungen</a>
+                <a href="/sofiehermind.dk/de/contact.html" class="text-slate hover:text-burgundy transition-colors">Kontakt</a>
             </div>
         </div>
     </div>
@@ -111,7 +111,9 @@ document.getElementById('mobile-menu-button').addEventListener('click', function
     document.getElementById('mobile-menu').classList.toggle('hidden');
 });
 (function() {
+    var root = '/sofiehermind.dk';
     var p = window.location.pathname;
+    if (root && p.indexOf(root) === 0) p = p.substring(root.length);
     if (p.endsWith('/')) p += 'index.html';
     var m = p.match(/^\/(en|de)\/(.*)/);
     var lang = m ? m[1] : 'da';
@@ -119,20 +121,18 @@ document.getElementById('mobile-menu-button').addEventListener('click', function
     if (!page) page = 'index.html';
     document.querySelectorAll('[data-lang]').forEach(function(a) {
         var l = a.dataset.lang;
-        a.href = l === 'da' ? '/' + page : '/' + l + '/' + page;
+        a.href = root + '/' + (l === 'da' ? page : l + '/' + page);
         if (l === lang) { a.classList.add('font-bold', 'text-burgundy'); a.classList.remove('text-slate-light'); }
     });
 })();
 (function() {
     var p = window.location.pathname;
     if (p.endsWith('/')) p = p + 'index.html';
-    if (p === '/index.html') p = '/';
     document.querySelectorAll('nav a[href]').forEach(function(a) {
         var h = a.getAttribute('href');
         if (!h || h.startsWith('#') || h.startsWith('http') || h.startsWith('mailto') || a.hasAttribute('data-lang')) return;
-        var hp = h;
-        if (hp.endsWith('/index.html')) hp = hp.slice(0, -10);
-        if (hp === p || (hp.endsWith('/') && hp + 'index.html' === p + '/index.html')) {
+        if (h.endsWith('/')) h = h + 'index.html';
+        if (h === p) {
             if (!a.classList.contains('bg-burgundy')) {
                 a.classList.remove('text-slate');
                 a.classList.add('text-burgundy', 'font-semibold');
@@ -175,7 +175,7 @@ document.getElementById('mobile-menu-button').addEventListener('click', function
             <!-- Revelation Gospel Choir -->
             <div class="beautiful-card rounded-2xl overflow-hidden flex flex-col">
                 <div class="image-overlay h-96">
-                    <img src="/assets/images/performances/revelation-gospel-choir-performance.jpg" alt="Revelation Gospel Choir" class="w-full h-full object-cover">
+                    <img src="/sofiehermind.dk/assets/images/performances/revelation-gospel-choir-performance.jpg" alt="Revelation Gospel Choir" class="w-full h-full object-cover">
                 </div>
                 <div class="p-10 bg-gradient-to-br from-burgundy to-burgundy-dark text-white">
                     <h3 class="font-serif text-4xl font-bold mb-2">Revelation Gospel Choir</h3>
@@ -244,7 +244,7 @@ document.getElementById('mobile-menu-button').addEventListener('click', function
             <!-- Glostrup Gospel -->
             <div class="beautiful-card rounded-2xl overflow-hidden flex flex-col">
                 <div class="image-overlay h-96">
-                    <img src="/assets/images/sofie/sofie-hermind-glostrup-scaled.jpg" alt="Glostrup Gospel" class="w-full h-full object-cover">
+                    <img src="/sofiehermind.dk/assets/images/sofie/sofie-hermind-glostrup-scaled.jpg" alt="Glostrup Gospel" class="w-full h-full object-cover">
                 </div>
                 <div class="p-10 bg-gradient-to-br from-gold to-bronze text-white">
                     <h3 class="font-serif text-4xl font-bold mb-2">Glostrup Gospel</h3>
@@ -338,7 +338,7 @@ document.getElementById('mobile-menu-button').addEventListener('click', function
 
 <!-- CTA -->
 <section class="relative py-16 overflow-hidden">
-    <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('/assets/images/performances/glostrup-spring-2024-full.jpeg');"></div>
+    <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('/sofiehermind.dk/assets/images/performances/glostrup-spring-2024-full.jpeg');"></div>
     <div class="absolute inset-0 bg-gradient-to-r from-burgundy-dark/95 to-burgundy/90"></div>
 
     <div class="relative z-10 max-w-4xl mx-auto px-6 sm:px-8 text-center">
@@ -375,11 +375,11 @@ document.getElementById('mobile-menu-button').addEventListener('click', function
             <div>
                 <h4 class="text-sm font-semibold text-gold mb-6 uppercase tracking-widest">Navigation</h4>
                 <ul class="space-y-4">
-                    <li><a href="/de/" class="elegant-underline text-warm-200 hover:text-white transition-colors">Startseite</a></li>
-                    <li><a href="/de/about.html" class="elegant-underline text-warm-200 hover:text-white transition-colors">&Uuml;ber Sofie</a></li>
-                    <li><a href="/de/choirs.html" class="elegant-underline text-warm-200 hover:text-white transition-colors">Ch&ouml;re</a></li>
-                    <li><a href="/de/services.html" class="elegant-underline text-warm-200 hover:text-white transition-colors">Leistungen</a></li>
-                    <li><a href="/de/contact.html" class="elegant-underline text-warm-200 hover:text-white transition-colors">Kontakt</a></li>
+                    <li><a href="/sofiehermind.dk/de/" class="elegant-underline text-warm-200 hover:text-white transition-colors">Startseite</a></li>
+                    <li><a href="/sofiehermind.dk/de/about.html" class="elegant-underline text-warm-200 hover:text-white transition-colors">&Uuml;ber Sofie</a></li>
+                    <li><a href="/sofiehermind.dk/de/choirs.html" class="elegant-underline text-warm-200 hover:text-white transition-colors">Ch&ouml;re</a></li>
+                    <li><a href="/sofiehermind.dk/de/services.html" class="elegant-underline text-warm-200 hover:text-white transition-colors">Leistungen</a></li>
+                    <li><a href="/sofiehermind.dk/de/contact.html" class="elegant-underline text-warm-200 hover:text-white transition-colors">Kontakt</a></li>
                 </ul>
             </div>
 

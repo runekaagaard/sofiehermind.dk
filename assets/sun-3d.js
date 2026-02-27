@@ -45,7 +45,7 @@ class Sun3D {
 
         // Load sun texture
         const textureLoader = new THREE.TextureLoader();
-        const sunTexture = textureLoader.load('/assets/images/sun-texture.jpg');
+        const sunTexture = textureLoader.load('/sofiehermind.dk/assets/images/sun-texture.jpg');
 
         // Custom shader material for sun effect with texture
         const material = new THREE.ShaderMaterial({
