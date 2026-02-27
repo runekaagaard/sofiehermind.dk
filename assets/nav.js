@@ -4,7 +4,7 @@ document.getElementById('mobile-menu-button').addEventListener('click', function
 
 // Language selector
 (function() {
-    var root = '/sofiehermind.dk';
+    var root = '';
     var p = window.location.pathname;
     if (root && p.indexOf(root) === 0) p = p.substring(root.length);
     if (p.endsWith('/')) p += 'index.html';
